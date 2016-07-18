@@ -1,0 +1,15 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Assets\Scripts\MoveHandler.cs">
+    <Files>
+      <File FileName="Assets\Assets\Scripts\WarCubeScript.cs" Line="30" Column="26" />
+      <File FileName="Assets\Assets\Scripts\GameManager.cs" Line="17" Column="1" />
+      <File FileName="Assets\Assets\Scripts\Entities.cs" Line="113" Column="29" />
+      <File FileName="Assets\Assets\Scripts\MoveHandler.cs" Line="58" Column="57" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
