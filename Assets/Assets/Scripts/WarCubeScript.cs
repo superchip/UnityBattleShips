@@ -5,6 +5,14 @@ public class WarCubeScript : MonoBehaviour
 {
 	void OnMouseDown() 
 	{
+		if(!MoveHandler.IsPlayerMove())
+			return;
+
+		CheckHit();
+	}
+
+	public void CheckHit()
+	{
 		GameEntities.WarCube warCube = null;
 
 		// If cube was touched already
@@ -24,7 +32,7 @@ public class WarCubeScript : MonoBehaviour
 			// miss is blue
 			changeColor(Color.blue);
 		}
-			
+
 	}
 
 	// Change war cube color

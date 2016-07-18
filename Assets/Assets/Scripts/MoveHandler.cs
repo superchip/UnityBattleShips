@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class MoveHandler : MonoBehaviour {
 
@@ -8,14 +8,16 @@ public class MoveHandler : MonoBehaviour {
 
 	public static bool IsWarCubedTouched(Vector3 position, out GameEntities.WarCube outWarCube)
 	{
-		outWarCube = null;
+		outWarCube = gameManagerScript.PlayerGameGrid.GetWarCube(position);
 
-		GameEntities.WarCube warCube = gameManagerScript.ComputerGameGrid.GetWarCube(position);
-
-		if(warCube!=null)
+		if(gameManagerScript.PlayerMove)
 		{
-			outWarCube = warCube;
-			return warCube.Touched;
+			outWarCube = gameManagerScript.ComputerGameGrid.GetWarCube(position);
+		}
+			
+		if(outWarCube!=null)
+		{
+			return outWarCube.Touched;
 		}
 
 		return false;
@@ -24,7 +26,15 @@ public class MoveHandler : MonoBehaviour {
 	// Going over 
 	public static bool CheckHit(GameEntities.WarCube warCubeInput)
 	{
-		foreach(GameEntities.WarCube warCube in gameManagerScript.ComputerGameGrid.warCubes)
+		List<GameEntities.WarCube> warCubes = gameManagerScript.PlayerGameGrid.warCubes;
+
+		if(gameManagerScript.PlayerMove)
+		{
+			warCubes = gameManagerScript.ComputerGameGrid.warCubes;
+		}
+			
+
+		foreach(GameEntities.WarCube warCube in warCubes)
 		{
 			if(warCube.Touched)
 				continue;
@@ -45,9 +55,21 @@ public class MoveHandler : MonoBehaviour {
 		return false;
 	}
 
+	public static bool IsPlayerMove()
+	{
+		return gameManagerScript.PlayerMove;
+	}
+
 	private static bool checkPlaneHit(GameEntities.WarCube warCubeInput)
 	{
-		foreach(GameEntities.Plane plane in gameManagerScript.ComputerGameGrid.planes)
+		List<GameEntities.Plane> planes = gameManagerScript.PlayerGameGrid.planes;
+
+		if(gameManagerScript.PlayerMove)
+		{
+			planes = gameManagerScript.ComputerGameGrid.planes;
+		}
+
+		foreach(GameEntities.Plane plane in planes)
 		{
 			// Skip destroyed planes
 			if(plane.IsDestroyed)
@@ -55,6 +77,7 @@ public class MoveHandler : MonoBehaviour {
 			
 			foreach(GameEntities.WarCube warCube in plane.WarCubes)
 			{
+				// Point was found on plane
 				if(warCube.Position.x == warCubeInput.Position.x && warCube.Position.y == warCubeInput.Position.y)
 				{
 					// Destroy plane
@@ -68,6 +91,8 @@ public class MoveHandler : MonoBehaviour {
 			}
 		}
 
+		// Switch state since we didn't find a plane
+		gameManagerScript.PlayerMove = !gameManagerScript.PlayerMove;
 		return false;
 	}
 }

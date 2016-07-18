@@ -41,9 +41,14 @@ namespace GameEntities
 		public List<WarCube> warCubes {get;set;}
 		public List<Plane> planes {get;set;}
 
+		public int RowSize;
+		public int ColumnSize;
+
 		bool playerGrid;
 
 		GameObject parentGrid;
+
+
 
 		public GameGrid(bool isPlayerGrid, GameObject parentGridGameObject)
 		{
@@ -72,6 +77,20 @@ namespace GameEntities
 			return null;
 		}
 
+		// Getting the war cube from the grid by war cube postion
+		public WarCube GetWarCube(int x, int y)
+		{
+			foreach(GameEntities.WarCube warCube in this.warCubes)
+			{
+				if(warCube.Position.x == x && warCube.Position.y == y)
+				{
+					return warCube;
+				}
+			}
+
+			return null;
+		}
+
 		// Build the Game grid
 		private void buildGrid()
 		{
@@ -81,15 +100,15 @@ namespace GameEntities
 			// Finding grid row and column length
 			int size =  (int)Mathf.Sqrt(ts.Length);
 
-			int rowSize    = size / 2;
-			int columnSize = size / 2;
+			RowSize    = size / 2;
+			ColumnSize = size / 2;
 
 			int count = 1;
 
 			// Assigning Grid Warcubes position
-			for(int i = columnSize ; i >= -columnSize ; --i)
+			for(int i = ColumnSize ; i >= -ColumnSize ; --i)
 			{
-				for(int j = -rowSize ; j <= rowSize ; ++j)
+				for(int j = -RowSize ; j <= RowSize ; ++j)
 				{
 					Vector3 pos = new Vector3((float)j,(float)i,0F);
 					GameEntities.WarCube warCube = new WarCube(ts[count++].gameObject, pos);
