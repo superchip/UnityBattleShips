@@ -11,14 +11,14 @@ public class WarCubeScript : MonoBehaviour
 		CheckHit();
 	}
 
-	public void CheckHit()
+	public bool CheckHit()
 	{
 		GameEntities.WarCube warCube = null;
 
 		// If cube was touched already
 		if(MoveHandler.IsWarCubedTouched(this.transform.position,out warCube))
 		{
-			return;
+			return false;
 		}
 
 		// Plane Hit
@@ -26,11 +26,13 @@ public class WarCubeScript : MonoBehaviour
 		{
 			// hit is red
 			changeColor(Color.red);
+			return true;
 		}
 		else
 		{
 			// miss is blue
 			changeColor(Color.blue);
+			return false;
 		}
 
 	}
